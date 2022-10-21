@@ -1,0 +1,22 @@
+apiurl: 'https://api.mist.com/api/v1/'
+orgid: '...'
+site: 'API_site'
+token: '...'
+type: "spoke"
+name: "spoke_API"
+hub_name: "TO_HUB"
+ntp: ['193.204.114.232']
+dns: ['8.8.4.4']
+wans:
+    - name: "wan0"
+      ip: "172.30.10.2"
+      mask: "31"
+      gw: "172.30.10.1"
+      if: "ge-0/0/2"
+      hub: "WAN0"
+    - name: "wan1"
+      ip: "172.30.20.2"
+      mask: "31"
+      gw: "172.30.20.1"
+      if: "ge-0/0/4"
+      hub: "WAN1"
