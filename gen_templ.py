@@ -28,6 +28,8 @@ template['org_id']=data['orgid']
 resp=requests.post(data['apiurl']+"orgs/"+data['orgid']+"/gatewaytemplates", json=template, headers=headers)
 print(resp)
 
+gwid=resp.json()['id']
+
 template['dns_servers']=list(data['dns'])
 template['ntp_servers']=list(data['ntp'])
 
@@ -76,5 +78,5 @@ print(json.dumps(template, indent=4))
 resp=requests.put(data['apiurl']+"sites/"+siteid+"/setting", json=current_vars, headers=headers)
 print(resp)
 
-#resp=requests.post(data['apiurl']+"orgs/"+data['orgid']+"/gatewaytemplates", json=template, headers=headers)
-#print(resp)
+resp=requests.put(data['apiurl']+"orgs/"+data['orgid']+"/gatewaytemplates/"+gwid, json=template, headers=headers)
+print(resp)
