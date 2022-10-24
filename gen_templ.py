@@ -70,6 +70,7 @@ for wan in data['wans']:
     current_vars['vars'][data['name']+'_'+wan['name']+'_'+'gw']=wan['gw']
 
 print(json.dumps(current_vars['vars'], indent=4))
+print(json.dumps(template, indent=4))
 
 resp=requests.put(data['apiurl']+"sites/"+siteid+"/setting", json=current_vars, headers=headers)
 print(resp)
