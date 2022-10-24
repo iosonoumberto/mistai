@@ -33,6 +33,11 @@ template['path_preferences']['overlay']={}
 template['path_preferences']['overlay']['strategy']='ecmp'
 template['path_preferences']['overlay']['paths']=[]
 
+if data['type']=='hub':
+    template['path_preferences']['underlay']={}
+    template['path_preferences']['underlay']['strategy']='ordered'
+    template['path_preferences']['underlay']['paths']=[]
+
 template['port_config']={}
 for wan in data['wans']:
     template['port_config'][wan['if']]={}
@@ -41,12 +46,20 @@ for wan in data['wans']:
     template['port_config'][wan['if']]['wan_type']='broadband'
     template['port_config'][wan['if']]['vpn_paths']={}
     template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']={}
-    template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['bfd_profile']='broadband'
-    template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['role']='spoke'
+    if data['type']=='spoke':
+        template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['role']='spoke'
+        template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['bfd_profile']='broadband'
+    else:
+        template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['role']='hub'
     tmp_path={}
     tmp_path['type']='vpn'
     tmp_path['name']=data['hub_name']+'-'+wan['hub']+'.OrgOverlay'
     template['path_preferences']['overlay']['paths'].append(tmp_path)
+    if data['type']=='spoke':
+        tmp_path={}
+        tmp_path['type']='wan'
+        tmp_path['name']=wan['name']
+        template['path_preferences']['underlay']['paths'].append(tmp_path)
     template['port_config'][wan['if']]['ip_config']={}
     template['port_config'][wan['if']]['ip_config']['type']='static'
     template['port_config'][wan['if']]['ip_config']['ip']='{{'+data['name']+'_'+wan['name']+'_'+'ip}}'
