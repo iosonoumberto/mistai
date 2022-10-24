@@ -33,7 +33,7 @@ template['path_preferences']['overlay']={}
 template['path_preferences']['overlay']['strategy']='ecmp'
 template['path_preferences']['overlay']['paths']=[]
 
-if data['type']=='hub':
+if data['type']=='gateway':
     template['path_preferences']['underlay']={}
     template['path_preferences']['underlay']['strategy']='ordered'
     template['path_preferences']['underlay']['paths']=[]
@@ -55,7 +55,7 @@ for wan in data['wans']:
     tmp_path['type']='vpn'
     tmp_path['name']=data['hub_name']+'-'+wan['hub']+'.OrgOverlay'
     template['path_preferences']['overlay']['paths'].append(tmp_path)
-    if data['type']=='hub':
+    if data['type']=='gateway':
         tmp_path={}
         tmp_path['type']='wan'
         tmp_path['name']=wan['name']
