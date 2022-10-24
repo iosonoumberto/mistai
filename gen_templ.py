@@ -44,11 +44,13 @@ for wan in data['wans']:
     template['port_config'][wan['if']]['name']=wan['name']
     template['port_config'][wan['if']]['usage']='wan'
     template['port_config'][wan['if']]['wan_type']='broadband'
+    template['port_config'][wan['if']]['vpn_paths']={}
+    template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']={}
     if data['type']=='spoke':
-        template['port_config'][wan['if']]['vpn_paths']={}
-        template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']={}
         template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['role']='spoke'
         template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['bfd_profile']='broadband'
+    else:
+        template['port_config'][wan['if']]['vpn_paths'][data['hub_name']+'-'+wan['hub']+'.OrgOverlay']['role']='hub'
     tmp_path={}
     tmp_path['type']='vpn'
     tmp_path['name']=data['hub_name']+'-'+wan['hub']+'.OrgOverlay'
