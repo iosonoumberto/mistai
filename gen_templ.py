@@ -1,8 +1,14 @@
 import requests
 import yaml
 import json
+import argparse
 
-ft=open('template_data.yml','r')
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--file", action="store", type=str, default='all',help="teplate data yaml")
+
+args = parser.parse_args()
+
+ft=open(args.file,'r')
 data = yaml.load(ft, Loader=yaml.FullLoader)
 ft.close()
 
