@@ -55,7 +55,7 @@ for wan in data['wans']:
     tmp_path['type']='vpn'
     tmp_path['name']=data['hub_name']+'-'+wan['hub']+'.OrgOverlay'
     template['path_preferences']['overlay']['paths'].append(tmp_path)
-    if data['type']=='shub':
+    if data['type']=='hub':
         tmp_path={}
         tmp_path['type']='wan'
         tmp_path['name']=wan['name']
